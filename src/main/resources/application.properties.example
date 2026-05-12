@@ -1,0 +1,11 @@
+spring.application.name=webhook-clickup
+clickup.api.token=YOUR_CLICKUP_API_TOKEN
+clickup.webhook-id=YOUR_CLICKUP_WEBHOOK_ID
+clickup.usernames=blocked_user
+clickup.workspace-id=YOUR_WORKSPACE_ID
+
+clickup.fields.resp-teams-id=YOUR_RESP_TEAMS_FIELD_ID
+clickup.fields.move-to-backlog-as-id=YOUR_MOVE_TO_BACKLOG_AS_FIELD_ID
+clickup.fields.triage-main-id=YOUR_TRIAGE_MAIN_FIELD_ID
+clickup.lists.triage-name=TRIAGE 👋🏻
+clickup.lists.backlog-name=Backlog
