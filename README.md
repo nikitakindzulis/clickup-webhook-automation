@@ -37,6 +37,88 @@ ClickUp sends webhook events to the application endpoint:
 
 ```http
 POST /webhook
-The controller validates the incoming payload and checks that the received webhook_id matches the configured expected webhook id.
+```
 
-After validation, the payload is passed to the service layer, where the event is analyzed and delegated to the correct handler.
+The application validates the incoming `webhook_id`, reads the event type, and runs the required business logic.
+
+If an external user comments on a task, the task status is changed to `check task`.
+
+If the `Resp. Teams` custom field changes, the task is moved to the TRIAGE list of the new responsible team.
+
+If the `Move to Backlog as?` custom field changes, the task is moved to Backlog or marked as a main TRIAGE task.
+
+## Configuration
+
+Create a local `application.properties` file using `application.properties.example`.
+
+Example configuration:
+
+```properties
+clickup.api.token=YOUR_CLICKUP_API_TOKEN
+clickup.webhook-id=YOUR_WEBHOOK_ID
+clickup.workspace-id=YOUR_WORKSPACE_ID
+
+clickup.usernames=internal.user1,internal.user2
+
+clickup.fields.resp-teams-id=RESP_TEAMS_FIELD_ID
+clickup.fields.move-to-backlog-as-id=MOVE_TO_BACKLOG_AS_FIELD_ID
+clickup.fields.triage-main-id=TRIAGE_MAIN_FIELD_ID
+
+clickup.lists.triage-name=TRIAGE
+clickup.lists.backlog-name=Backlog
+```
+
+Do not commit real API tokens, webhook IDs, or private configuration values.
+
+## How to Run
+
+Clone the repository:
+
+```bash
+git clone https://github.com/your-username/your-repository-name.git
+cd your-repository-name
+```
+
+Run the application:
+
+```bash
+./gradlew bootRun
+```
+
+On Windows:
+
+```bash
+gradlew.bat bootRun
+```
+
+The application starts on:
+
+```text
+http://localhost:8080
+```
+
+For local webhook testing, expose the application with ngrok:
+
+```bash
+ngrok http 8080
+```
+
+Use the generated URL as the ClickUp webhook URL:
+
+```text
+https://your-ngrok-url.ngrok-free.app/webhook
+```
+
+## Testing
+
+Run tests:
+
+```bash
+./gradlew test
+```
+
+On Windows:
+
+```bash
+gradlew.bat test
+```
